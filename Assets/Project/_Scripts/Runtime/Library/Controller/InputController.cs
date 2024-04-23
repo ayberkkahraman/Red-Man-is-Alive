@@ -29,15 +29,11 @@
     }
     #endregion
     
-
-    public static InputSequence Interact() => Input.Sequence(ControllerInput.CharacterController.Interact);
+    
     public static InputSequence Jump() => Input.Sequence(ControllerInput.CharacterController.Jump);
-    public static InputSequence Block() => Input.Sequence(ControllerInput.CharacterController.Block);
     public static InputSequence Dash() => Input.Sequence(ControllerInput.CharacterController.Dash);
     public static InputSequence Move() => Input.Sequence(ControllerInput.CharacterController.Move);
     public static InputSequence Run() => Input.Sequence(ControllerInput.CharacterController.Run);
-    public static InputSequence Attack() => Input.Sequence(ControllerInput.CharacterController.Attack);
-    public static InputSequence Grab() => Input.Sequence(ControllerInput.CharacterController.Grab);
 
   }
 }

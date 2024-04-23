@@ -33,7 +33,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         [Header("Components")]
         [HideInInspector] public UnityEngine.CharacterController CharacterController;
         [HideInInspector] public Animator Animator;
-        public AnimatorOverrideController AnimatorOverrideController { get; set; }
         public LivingEntity LivingEntity { get; set; }
         public Unit EntityBase { get; set; }
 
@@ -202,8 +201,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
     #region Init / DeInit
         protected void Init()
         {
-            AnimatorOverrideController = new AnimatorOverrideController(Animator.runtimeAnimatorController);
-            Animator.runtimeAnimatorController = AnimatorOverrideController;
             CharacterController = GetComponent<UnityEngine.CharacterController>();
             LivingEntity = GetComponent<LivingEntity>();
             EntityBase = LivingEntity as Unit;
