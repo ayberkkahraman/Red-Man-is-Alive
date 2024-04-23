@@ -1,0 +1,17 @@
+{
+    "name": "Project._Scripts.Runtime.Library.Input",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8bb96a371b59c6f40a665e98b6606b07",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

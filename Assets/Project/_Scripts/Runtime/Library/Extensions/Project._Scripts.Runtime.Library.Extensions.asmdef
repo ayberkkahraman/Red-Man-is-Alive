@@ -1,0 +1,16 @@
+{
+    "name": "Project._Scripts.Runtime.Library.Extensions",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d18d5180f39d5ef439b0fe045c196620"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
