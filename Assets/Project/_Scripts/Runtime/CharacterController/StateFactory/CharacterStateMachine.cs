@@ -45,21 +45,12 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         [Header("Movement")]
         public float WalkingSpeed = 5f;
         public float RunningSpeed = 7.5f;
-        [HideInInspector] public float DefaultWalkingSpeed;
 
         public const float Gravity = -9.81f;
         
         public Func<bool> CanPlayerMove { get; set; }
-        public HashSet<MovementCondition> WalkConditions
-        {
-            get => _walkConditions;
-            set => _walkConditions = value;
-        }
-        public HashSet<MovementCondition> RotateConditions
-        {
-            get => _rotateConditions;
-            set => _rotateConditions = value;
-        }
+        public HashSet<MovementCondition> WalkConditions { get; set; }
+        public HashSet<MovementCondition> RotateConditions { get; set; }
 
         [Space]
         [HideInInspector] public Vector3 InputDirection;
@@ -92,8 +83,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
 
         public bool IsRotating { get; set; }
 
-        public bool IsHardRotating { get; set; }
-
         public Quaternion PreviousRotation { get; set; }
 
         [HideInInspector] public Vector3 AppliedVelocity;
@@ -120,13 +109,9 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         public float RotationControlOnAir => _rotationControlOnAir;
         #endregion
 
-        private HashSet<MovementCondition> _walkConditions;
-        private HashSet<MovementCondition> _rotateConditions;
-
         public Transform CameraTransform { get; set; }
 
         public float RotateAngle { get; set; }
-        public float RotateAngleLimit => 1.75f;
     #endregion
         
 
@@ -138,6 +123,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
     #endregion
 
         public Action OnAnimatorMoveCallback;
+        private static readonly int Grounded = Animator.StringToHash("IsGrounded");
 
     #region Unity Functions
         private void Awake()
@@ -207,8 +193,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             FullBodyBipedIK = GetComponent<FullBodyBipedIK>();
 
             PreviousRotation = transform.rotation;
-
-            DefaultWalkingSpeed = WalkingSpeed;
             DefaultRotationSpeed = RotationSpeed;
 
             _coyoteTimer = CoyoteTime;
@@ -253,6 +237,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             var groundCheckerSize = new Vector3(GroundCheckerDistance / 3f, GroundCheckerDistance, GroundCheckerDistance / 3f);
             var groundCheckerPosition = GroundCheckerPoint.position;
             var isGrounded = Physics.OverlapBox(groundCheckerPosition, groundCheckerSize / 2, Quaternion.identity, GroundLayers).Length > 0f;
+            Animator.SetBool(Grounded, isGrounded);
             return isGrounded;
         }
 
@@ -316,11 +301,9 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             //Rotation checker
             IsRotating = RotateAngle > .5f;
 
-            IsHardRotating = RotateAngle > RotateAngleLimit && CurrentMovementSpeed > 3f;
-
             var speedOnRotation = IsMovementButtonPressed && CurrentMovementSpeed < MinSpeedTreshold ? 1 : IsRotating ? RotationSmoothSpeed : 1f;
         
-            speedOnRotation = IsMovementButtonPressed && CurrentMovementSpeed < MinSpeedTreshold ? 1 : IsHardRotating ? speedOnRotation/2 : speedOnRotation;
+            speedOnRotation = IsMovementButtonPressed && CurrentMovementSpeed < MinSpeedTreshold ? 1 : speedOnRotation;
 
             if (!rotationSmooth) speedOnRotation = 1f;
         
@@ -330,7 +313,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             var accelerationSpeed = IsMovementButtonPressed ? SpeedAccelerationSpeed : SpeedAccelerationSpeed * SlowdownAccelerationMultiplier;
 
         #if UNITY_EDITOR
-            accelerationSpeed = accelerationSpeed * 3;
+            accelerationSpeed *= 3;
         #endif
             bool isRunning = CurrentState.Factory.WalkState.IsRunning;
 
@@ -346,17 +329,10 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         {
             if (CanPlayerRotate() == false) return;
 
-            if (RotateAngle > RotateAngleLimit) IsHardRotating = true;
-
-            RotationSpeed =   IsRotating ? (IsHardRotating ? DefaultRotationSpeed/1.5f : RotationSpeed) : DefaultRotationSpeed;
-
-            RotationSpeed *= CurrentMovementSpeed > 2f ? 1 : 1.5f;
-
             //Get the current rotation
             Quaternion currentRotation = transform.rotation;
 
             var lookDirection = new Vector3(AppliedVelocity.x, 0, AppliedVelocity.z);
-            // lookDirection.y = lookDirection == Vector3.zero ?  .0025f : 0f;
 
             if (lookDirection != Vector3.zero)
             {
@@ -394,7 +370,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             if (CanPlayerMove == null || CanPlayerMove() != true)
                 return;
 
-            var targetVelocity = IsMovementButtonPressed ? !IsHardRotating ? AppliedVelocity : AppliedVelocity / SlowdownAccelerationMultiplier : transform.forward * CurrentMovementSpeed/1.5f;
+            var targetVelocity = IsMovementButtonPressed ? AppliedVelocity : transform.forward * CurrentMovementSpeed/1.5f;
 
             CharacterController.Move(targetVelocity * (speedMultiplier * Time.deltaTime));
             

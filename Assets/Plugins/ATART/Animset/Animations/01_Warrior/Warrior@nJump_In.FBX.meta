@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 2da62fdcab9ba19469063f88a0e9c7db
 ModelImporter:
-  serializedVersion: 26
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
@@ -18,7 +18,7 @@ ModelImporter:
       name: PlayerMale02
     second: {fileID: 2100000, guid: 695cab68b969a4f46a0d39a4f9c2618e, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -27,15 +27,16 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'Bip001 Spine' has translation animation that
-      will be discarded.\n\t'Bip001 Spine1' has translation animation that will be
-      discarded.\n"
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Bip001 Spine' has translation animation
+      that will be discarded.\n\t'Bip001 Spine1' has translation animation that will
+      be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -213,28 +214,29 @@ ModelImporter:
         weight: 1
       - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck
         weight: 1
-      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 Head
+      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001
+          Head
         weight: 1
-      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 Head/Bip001
-          Hair
+      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001
+          Head/Bip001 Hair
         weight: 1
-      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 Head/Bip001
-          Hair/Bip001 Hair02
+      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001
+          Head/Bip001 Hair/Bip001 Hair02
         weight: 1
-      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 Head/Bip001
-          Hair/Bip001 Hair02/Bip001 Hair03
+      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001
+          Head/Bip001 Hair/Bip001 Hair02/Bip001 Hair03
         weight: 1
-      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 Head/Bip001
-          Hair/Bip001 Hair02/Bip001 Hair03/Bip001 Hair04
+      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001
+          Head/Bip001 Hair/Bip001 Hair02/Bip001 Hair03/Bip001 Hair04
         weight: 1
-      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 Head/Bip001
-          Jaw
+      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001
+          Head/Bip001 Jaw
         weight: 1
-      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 Head/Bip001
-          L Eye
+      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001
+          Head/Bip001 L Eye
         weight: 1
-      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 Head/Bip001
-          R Eye
+      - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001
+          Head/Bip001 R Eye
         weight: 1
       - path: Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 R Clavicle
         weight: 1
@@ -326,26 +328,35 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -356,7 +367,6 @@ ModelImporter:
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
-  copyAvatar: 1
   humanDescription:
     serializedVersion: 3
     human:
@@ -467,19 +477,19 @@ ModelImporter:
     - boneName: Bip001 L UpperArm
       humanName: LeftUpperArm
       limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
+        min: {x: -90, y: -100, z: -40}
+        max: {x: 90, y: 100, z: 100}
         value: {x: 0, y: 0, z: 0}
         length: 0
-        modified: 0
+        modified: 1
     - boneName: Bip001 R UpperArm
       humanName: RightUpperArm
       limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
+        min: {x: -90, y: -100, z: -40}
+        max: {x: 90, y: 100, z: 100}
         value: {x: 0, y: 0, z: 0}
         length: 0
-        modified: 0
+        modified: 1
     - boneName: Bip001 L Forearm
       humanName: LeftLowerArm
       limit:
@@ -769,18 +779,18 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: ATART_Dummy(Clone)
+    - name: ATART_Dummy_RiggedWeapons(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: ATART_Dummy
-      parentName: ATART_Dummy(Clone)
+      parentName: ATART_Dummy_RiggedWeapons(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001
-      parentName: ATART_Dummy(Clone)
+      parentName: ATART_Dummy_RiggedWeapons(Clone)
       position: {x: -0, y: 0.7713816, z: 0}
       rotation: {x: -0.50000006, y: 0.49999997, z: 0.49999997, w: 0.5}
       scale: {x: 1, y: 1, z: 1}
@@ -941,7 +951,7 @@ ModelImporter:
     - name: Bip001 Spine1
       parentName: Bip001 Spine
       position: {x: -0.12721176, y: -0.00020475387, z: -6.4114375e-10}
-      rotation: {x: 0.00000017887577, y: -0.00000016012721, z: 0.052335862, w: 0.9986295}
+      rotation: {x: 0.00000017887554, y: -0.00000016012723, z: 0.052335862, w: 0.9986295}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001 L Clavicle
       parentName: Bip001 Spine1
@@ -1122,7 +1132,7 @@ ModelImporter:
     - name: Bip001 Head
       parentName: Bip001 Neck
       position: {x: -0.061811216, y: -0.00528923, z: -0.00000000388216}
-      rotation: {x: -0.0000015284421, y: -0.00000015527667, z: -0.0379831, w: 0.99927837}
+      rotation: {x: -0.0000015284419, y: -0.0000001552766, z: -0.0379831, w: 0.99927837}
       scale: {x: 1, y: 1, z: 1}
     - name: Bip001 Hair
       parentName: Bip001 Head
@@ -1335,22 +1345,47 @@ ModelImporter:
       rotation: {x: 0.0000000037252899, y: 0.000000007450581, z: 0.000000013038516,
         w: 1}
       scale: {x: 1, y: 1, z: 1}
-    armTwist: 0.5
-    foreArmTwist: 0.5
-    upperLegTwist: 0.5
-    legTwist: 0.5
-    armStretch: 0.05
-    legStretch: 0.05
+    - name: Bow
+      parentName: ATART_Dummy_RiggedWeapons(Clone)
+      position: {x: -0.594867, y: 0.99001396, z: -0.0069630346}
+      rotation: {x: 0.008255632, y: -0.056651525, z: 0.16701046, w: 0.9842916}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Shield
+      parentName: ATART_Dummy_RiggedWeapons(Clone)
+      position: {x: -0.594867, y: 0.99001396, z: -0.0069630346}
+      rotation: {x: 0.008255554, y: -0.056651432, z: 0.16701041, w: 0.9842916}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Staff
+      parentName: ATART_Dummy_RiggedWeapons(Clone)
+      position: {x: 0.5948671, y: 0.9900134, z: -0.006962476}
+      rotation: {x: 0.056651067, y: -0.008255766, z: 0.9842916, w: 0.1670107}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Sword
+      parentName: ATART_Dummy_RiggedWeapons(Clone)
+      position: {x: 0.5948671, y: 0.9900134, z: -0.006962476}
+      rotation: {x: 0.056651205, y: -0.00825546, z: 0.9842916, w: 0.16701064}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 1
+    foreArmTwist: 0
+    upperLegTwist: 1
+    legTwist: 0
+    armStretch: 0
+    legStretch: 0
     feetSpacing: 0
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: c09678a75766e5442ba1f08b629f0c8b,
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: db2ab2e48c5fc8d49a83c5acc6b17e85,
     type: 3}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

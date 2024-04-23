@@ -8,10 +8,8 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
   public class CharacterFallState : CharacterBaseState
   {
     private static readonly int IsFallingAnimationHash = Animator.StringToHash("IsFalling");
-    private static readonly int IsLandedAnimationHash = Animator.StringToHash("IsLanded");
     private static readonly int TimeInAirAnimationHash = Animator.StringToHash("TimeInAir");
-
-    protected const float PushFromEdgeForce = .75f;
+    
     protected const float MovementMultiplierOnFall = .625f;
 
     private float _airTimerForLocomotion;
@@ -143,8 +141,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
 
     public void OnLanded()
     {
-      Context.Animator.SetTrigger(IsLandedAnimationHash);
-
       if (!FallFromHigh)
       {
         if(TimeInAir > .75f)

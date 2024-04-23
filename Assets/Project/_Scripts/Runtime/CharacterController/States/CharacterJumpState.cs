@@ -7,22 +7,20 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
   public class CharacterJumpState : CharacterBaseState
   {
     private static readonly int JumpAnimationHash = Animator.StringToHash("Jump");
-    private static readonly int IsLandedAnimationHash = Animator.StringToHash("IsLanded");
+    private static readonly int IsInAirAnimationHash = Animator.StringToHash("IsInAir");
 
-    public bool IsMoving;
-    public bool IsLanded { get; set; }
-    protected bool Jumped { get; set; }
+    public bool IsMoving{ get; set; }
     public bool IsInAir { get; set; }
+    
+    protected float TimeInAir{ get; set; }
     protected float JumpForce => Context.JumpForce;
 
     private float _verticalVelocity;
-    private static readonly int IsInAirAnimationHash = Animator.StringToHash("IsInAir");
-
-
+    
     private const float Gravity = -9.81f;
     private const float FallSpeedTreshold = 8.5f;
 
-    protected float TimeInAir;
+    
 
     public CharacterJumpState(CharacterStateMachine currentContext, CharacterStateFactory characterStateFactory, bool isMoving) : base(currentContext, characterStateFactory)
     {
@@ -46,22 +44,12 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     public override void EnterState()
     {
       TimeInAir = 0f;
-      
-      IsLanded = false;
-      Jumped = true;
 
       Context.Animator.SetTrigger(JumpAnimationHash);
       
       _verticalVelocity = Mathf.Sqrt(2f * JumpForce * -Gravity);
-      
-      Context.Animator.ResetTrigger(IsLandedAnimationHash);
-
-      BaseBehaviour.RunAfterSeconds(.2f, () =>
-      {
-        Context.Animator.ResetTrigger(JumpAnimationHash);
-        IsInAir = true;
-        Context.Animator.SetBool(IsInAirAnimationHash, IsInAir);
-      });
+      IsInAir = true;
+      Context.Animator.SetBool(IsInAirAnimationHash, IsInAir);
     }
     public override void FixedUpdateState()
     {
@@ -71,16 +59,9 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     public override void UpdateState()
     {
       HandleGravity();
-      AccelerationConfiguration(Context.MovementControlOnAir);
+      AccelerationConfiguration();
       RotationConfiguration(Context.RotationControlOnAir);
       Context.MoveCharacter(Context.InputDirection, Context.MovementControlOnAir);
-
-      // AnyClimbable();
-      
-      if (!Jumped) return;
-      
-      if (IsLanded) return;
-      
       JumpConfiguration();
     }
 
@@ -90,11 +71,10 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     }
     protected override void ExitState()
     {
-      Jumped = false;
-
-      IsLanded = true;
+      IsInAir = false;
       
-      BaseBehaviour.RunAfterSeconds(.05f, () => Context.Animator.SetBool(IsInAirAnimationHash, false));
+      Context.Animator.SetBool(IsInAirAnimationHash, false);
+      BaseBehaviour.RunAfterSeconds(.02f, () => Context.Animator.SetBool(IsInAirAnimationHash, false));
     }
     public override void CheckSwitchStates()
     {
@@ -112,27 +92,14 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       _verticalVelocity += Gravity * Time.deltaTime;
       
       JumpHandler();
-
-      if (!IsInAir) return;
-
       CheckSwitchStates();
       
-      if (_verticalVelocity < FallSpeedTreshold)
-      {
-        IsInAir = false;
-        Factory.FallState.TimeInAir = TimeInAir*.625f;
-        SwitchState(Factory.Fall(Vector3.up,_verticalVelocity));
-      }
-
-      if (!Context.IsGrounded())
+      if (!(_verticalVelocity < FallSpeedTreshold))
         return;
-
-      Context.Animator.SetTrigger(IsLandedAnimationHash);
       
       IsInAir = false;
-
-      IsLanded = true;
-      SwitchState(Factory.Walk());
+      Factory.FallState.TimeInAir = TimeInAir*.625f;
+      SwitchState(Factory.Fall(Vector3.up,_verticalVelocity));
     }
 
     public void JumpHandler()
@@ -150,7 +117,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
 
     public void JumpAction(Vector3 direction)
     {
-      var multiplier = IsMoving ? 1.25f + (Context.WalkingSpeed) : 1f;
+      var multiplier = IsMoving ? 1.25f + Context.WalkingSpeed : 1f;
 
       direction *= multiplier;
 
