@@ -34,7 +34,7 @@ MonoBehaviour:
   shape: 0
   border: 0.05
   customHeight: 0
-  height: 0
+  height: 1
   verticalOffset: 0
   distance: 0
   distanceFallOff: 0.93
