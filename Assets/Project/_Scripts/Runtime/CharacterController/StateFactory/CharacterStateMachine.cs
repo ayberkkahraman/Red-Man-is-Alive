@@ -82,6 +82,8 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         public Func<bool> CanPlayerRotate { get; set; }
 
         public bool IsRotating { get; set; }
+        public bool IsHardRotating { get; set; }
+        public float RotateAngleLimit => 1.75f;
 
         public Quaternion PreviousRotation { get; set; }
 
@@ -262,18 +264,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             Animator.SetFloat(VelocityAnimationHash, CurrentMovementSpeed);
         }
     #endregion
-    
-        private void OnAnimatorMove()
-        {
-            if (OnAnimatorMoveCallback == null)
-            {
-                Animator.ApplyBuiltinRootMotion();
-            }
-            
-            else
-                OnAnimatorMoveCallback?.Invoke();
-        }
-    
+
     #region Acceleration
 
         public void HandleGravity(Vector3 direction, float speedMultiplier = Gravity)
@@ -293,9 +284,11 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             //Rotation checker
             IsRotating = RotateAngle > .5f;
 
+            IsHardRotating = RotateAngle > RotateAngleLimit && CurrentMovementSpeed > 3f;
+
             var speedOnRotation = IsMovementButtonPressed && CurrentMovementSpeed < MinSpeedTreshold ? 1 : IsRotating ? RotationSmoothSpeed : 1f;
         
-            speedOnRotation = IsMovementButtonPressed && CurrentMovementSpeed < MinSpeedTreshold ? 1 : speedOnRotation;
+            speedOnRotation = IsMovementButtonPressed && CurrentMovementSpeed < MinSpeedTreshold ? 1 : IsHardRotating ? speedOnRotation/2 : speedOnRotation;
 
             if (!rotationSmooth) speedOnRotation = 1f;
         
@@ -305,7 +298,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             var accelerationSpeed = IsMovementButtonPressed ? SpeedAccelerationSpeed : SpeedAccelerationSpeed * SlowdownAccelerationMultiplier;
 
         #if UNITY_EDITOR
-            accelerationSpeed *= 3;
+            accelerationSpeed = accelerationSpeed * 3;
         #endif
             bool isRunning = CurrentState.Factory.WalkState.IsRunning;
 
@@ -321,10 +314,17 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         {
             if (CanPlayerRotate() == false) return;
 
+            if (RotateAngle > RotateAngleLimit) IsHardRotating = true;
+
+            RotationSpeed =   IsRotating ? (IsHardRotating ? DefaultRotationSpeed/1.5f : RotationSpeed) : DefaultRotationSpeed;
+
+            RotationSpeed *= CurrentMovementSpeed > 2f ? 1 : 1.5f;
+
             //Get the current rotation
             Quaternion currentRotation = transform.rotation;
 
             var lookDirection = new Vector3(AppliedVelocity.x, 0, AppliedVelocity.z);
+            // lookDirection.y = lookDirection == Vector3.zero ?  .0025f : 0f;
 
             if (lookDirection != Vector3.zero)
             {
