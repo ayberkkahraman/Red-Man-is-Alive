@@ -74,9 +74,9 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         [Header("Rotation")]
 
         [Range(2f, 25f)]public float RotationSpeed = 15f;
-        [HideInInspector] public float DefaultRotationSpeed;
+        public float DefaultRotationSpeed { get; set; }
 
-        [Range(0.0f, 1.0f)][SerializeField] private float _rotationSmoothSpeed = .75f;
+        [Range(0.0f, 1.0f)][SerializeField] private float _rotationSmoothSpeed = .4f;
         public float RotationSmoothSpeed => _rotationSmoothSpeed;
 
         public Func<bool> CanPlayerRotate { get; set; }
@@ -116,14 +116,12 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         
 
     #region Animation Hash
-        private static int _isMovingHash;
-        private static int _velocityHash;
-        private static int _isInteractingHash;
-        private static int _hardRotate;
+        private static readonly int VelocityAnimationHash = Animator.StringToHash("Velocity");
+        private static readonly int GroundedAnimationHash = Animator.StringToHash("IsGrounded");
     #endregion
 
         public Action OnAnimatorMoveCallback;
-        private static readonly int Grounded = Animator.StringToHash("IsGrounded");
+       
 
     #region Unity Functions
         private void Awake()
@@ -135,11 +133,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             CurrentState.EnterState();
         
             CurrentState.InitializeState();
-        
-            _isMovingHash = Animator.StringToHash("IsMoving");
-            _velocityHash = Animator.StringToHash("Velocity");
-            _isInteractingHash = Animator.StringToHash("IsInteracting");
-            
+
             InputController.ControllerInput.CharacterController.Move.started += MovementConfiguration;
             InputController.ControllerInput.CharacterController.Move.canceled += MovementConfiguration;
             InputController.ControllerInput.CharacterController.Move.performed += MovementConfiguration;
@@ -217,8 +211,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
 
         private bool CanRotatePlayer()
         {
-            // return RotateConditions.All(x => x.Condition?.Invoke() == true);
-            return true;
+            return RotateConditions.All(x => x.Condition?.Invoke() == true);
         }
     #endregion
 
@@ -237,7 +230,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             var groundCheckerSize = new Vector3(GroundCheckerDistance / 3f, GroundCheckerDistance, GroundCheckerDistance / 3f);
             var groundCheckerPosition = GroundCheckerPoint.position;
             var isGrounded = Physics.OverlapBox(groundCheckerPosition, groundCheckerSize / 2, Quaternion.identity, GroundLayers).Length > 0f;
-            Animator.SetBool(Grounded, isGrounded);
+            Animator.SetBool(GroundedAnimationHash, isGrounded);
             return isGrounded;
         }
 
@@ -266,8 +259,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         /// </summary>
         private void SetAnimations()
         {
-            Animator.SetBool(_isMovingHash, IsMovementButtonPressed);
-            Animator.SetFloat(_velocityHash, CurrentMovementSpeed);
+            Animator.SetFloat(VelocityAnimationHash, CurrentMovementSpeed);
         }
     #endregion
     

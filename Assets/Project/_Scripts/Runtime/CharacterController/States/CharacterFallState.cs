@@ -21,8 +21,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     public bool IsFalling { get; set; }
     public Vector3 FallDirection;
 
-    private static readonly int FallFromHighAnimationHash = Animator.StringToHash("FallFromHigh");
-
     public CharacterFallState(CharacterStateMachine currentContext, CharacterStateFactory characterStateFactory, Vector3 fallDirection, float verticalVelocity) : base(currentContext, characterStateFactory)
     {
       FallDirection = fallDirection;
@@ -53,7 +51,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
 
       Context.Animator.SetFloat(TimeInAirAnimationHash, TimeInAir);
       Context.Animator.SetBool(IsFallingAnimationHash, IsFalling);
-      Context.Animator.SetBool(FallFromHighAnimationHash, FallFromHigh);
     }
     public override void UpdateState()
     {
@@ -102,19 +99,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       if (FallDirection.z < 0) FallDirection.z += Time.deltaTime*7.5f;
     
       Context.Animator.SetFloat(TimeInAirAnimationHash, TimeInAir);
-      Context.Animator.SetBool(FallFromHighAnimationHash, FallFromHigh);
-    }
-
-    public bool CheckIsFallingFromPlatform()
-    {
-      bool isFallingFromPlatform = false;
-      if(Physics.Raycast((Context.transform.position + (Context.transform.forward * -1f) + (Vector3.up * 2f)), Vector3.down, 
-           out _, 4f, LayerMask.GetMask($"Platform")))
-      {
-        isFallingFromPlatform = Context.PreviousState == Factory.WalkState;
-      }
-
-      return isFallingFromPlatform;
     }
 
     protected void LocomotionConfiguration()
@@ -155,12 +139,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
         Factory.WalkState.CanMove = false;
         ManagerContainer.Instance.GetInstance<CameraManager>().ShakeCamera(2f, .25f);
       }
-    }
-
-    public void SwitchToWalk()
-    {
-      SwitchState(Factory.Walk());
-      Factory.WalkState.CanMove = true;
     }
   }
 }

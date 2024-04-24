@@ -62,6 +62,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       AccelerationConfiguration();
       RotationConfiguration(Context.RotationControlOnAir);
       Context.MoveCharacter(Context.InputDirection, Context.MovementControlOnAir);
+      CheckSwitchStates();
       JumpConfiguration();
     }
 
@@ -78,6 +79,9 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     }
     public override void CheckSwitchStates()
     {
+      if(TimeInAir <= .2f) return;
+      
+      if(Context.IsGrounded()){SwitchState(Factory.Walk());}
     }
     public override void InitializeSubState()
     {
@@ -92,8 +96,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       _verticalVelocity += Gravity * Time.deltaTime;
       
       JumpHandler();
-      CheckSwitchStates();
-      
+
       if (!(_verticalVelocity < FallSpeedTreshold))
         return;
       
@@ -102,7 +105,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       SwitchState(Factory.Fall(Vector3.up,_verticalVelocity));
     }
 
-    public void JumpHandler()
+    public void  JumpHandler()
     {
       switch ( IsMoving )
       {

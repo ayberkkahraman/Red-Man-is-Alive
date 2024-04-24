@@ -1,14 +1,13 @@
 using _Scripts.Runtime.Entity.CharacterController.StateFactory;
 using Cinemachine;
 using Project._Scripts.Runtime.Library.Controller;
-using Project._Scripts.Runtime.Library.SubSystems;
 using Project._Scripts.Runtime.Managers.Manager;
 using Project._Scripts.Runtime.Managers.ManagerClasses;
 using UnityEngine;
 
 namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
 {
-  public class CharacterWalkState : CharacterBaseState
+  public sealed class CharacterWalkState : CharacterBaseState
   {
     public CinemachineVirtualCamera CharacterCamera { get; set; }
     
@@ -21,13 +20,12 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     public bool CanRun { get; set; }
 
     public bool IsRunning { get; set; }
-    protected float SpeedMultiplier => IsRunning ? Context.RunningSpeed / Context.WalkingSpeed : 1f;
-    protected bool StraightForwardLocomotion { get; set; }
+    private float SpeedMultiplier => IsRunning ? Context.RunningSpeed / Context.WalkingSpeed : 1f;
 
 
     public override void EnterState()
     {
-      if(!CanRun)BaseBehaviour.RunAfterSeconds(.5f, () => CanRun = true);
+      CanRun = true;
 
       CharacterCamera ??= ManagerContainer.Instance.GetInstance<CameraManager>().CharacterCamera;
     }
@@ -77,7 +75,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       IsRunning = CanRun && InputController.Run().HasInputPerformed();
     }
 
-    protected virtual void CheckSwitchSubStates()
+    private void CheckSwitchSubStates()
     {
       if (!InputController.Jump().HasInputTriggered())
         return;
@@ -114,7 +112,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     /// <summary>
     /// Handles the movement
     /// </summary>
-    protected void Movement(Vector3 direction, float multiplier)
+    private void Movement(Vector3 direction, float multiplier)
     {
       if (!CanMove) return;
       
