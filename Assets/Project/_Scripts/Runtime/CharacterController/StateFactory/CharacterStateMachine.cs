@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Runtime.Entity.CharacterController.States.BaseStates;
-using Project._Scripts.Runtime.Entity.EntitySystem;
-using Project._Scripts.Runtime.Entity.EntitySystem.Entities;
 using Project._Scripts.Runtime.Library.Controller;
 using Project._Scripts.Runtime.Managers.Manager;
 using Project._Scripts.Runtime.Managers.ManagerClasses;
@@ -33,10 +31,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         [Header("Components")]
         [HideInInspector] public UnityEngine.CharacterController CharacterController;
         [HideInInspector] public Animator Animator;
-        public LivingEntity LivingEntity { get; set; }
-        public Unit EntityBase { get; set; }
-
-        public FullBodyBipedIK FullBodyBipedIK { get; set; }
     #endregion
 
     #region Fields
@@ -184,9 +178,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         protected void Init()
         {
             CharacterController = GetComponent<UnityEngine.CharacterController>();
-            LivingEntity = GetComponent<LivingEntity>();
-            EntityBase = LivingEntity as Unit;
-            FullBodyBipedIK = GetComponent<FullBodyBipedIK>();
 
             PreviousRotation = transform.rotation;
             DefaultRotationSpeed = RotationSpeed;

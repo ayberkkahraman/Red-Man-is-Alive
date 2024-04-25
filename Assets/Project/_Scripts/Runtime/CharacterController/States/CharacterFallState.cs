@@ -46,8 +46,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
 
       FallFromHigh = false;
       IsFalling = true;
-    
-      Context.FullBodyBipedIK.enabled = false;
 
       Context.Animator.SetFloat(TimeInAirAnimationHash, TimeInAir);
       Context.Animator.SetBool(IsFallingAnimationHash, IsFalling);
@@ -117,8 +115,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       Context.Animator.SetBool(IsFallingAnimationHash, IsFalling);
       
       if (!Context.IsGrounded()) return;
-
-      Context.FullBodyBipedIK.enabled = true;
 
       OnLanded();
     }

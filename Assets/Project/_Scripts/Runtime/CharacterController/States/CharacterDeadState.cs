@@ -24,7 +24,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     public override void EnterState()
     {
       Context.gameObject.layer = LayerMask.NameToLayer($"Default");
-      Object.Destroy(Context.LivingEntity);
     }
     public override void FixedUpdateState()
     {
