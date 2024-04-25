@@ -108,28 +108,6 @@ namespace Project._Scripts.Runtime.Library.Controller
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""f53d18d1-7d1c-40bb-ae90-e86f85ca208b"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""087ea06f-14c5-43f6-90e0-c7104ff95e35"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""left"",
                     ""id"": ""a2e0ae46-5bfe-4cc8-9b58-0ce355cabdcb"",
                     ""path"": ""<Keyboard>/a"",
@@ -743,7 +721,7 @@ namespace Project._Scripts.Runtime.Library.Controller
                 AddCallbacks(instance);
             }
         }
-        public CharacterControlsActions CharacterController => new CharacterControlsActions(this);
+        public CharacterControlsActions @CharacterControls => new CharacterControlsActions(this);
 
         // CameraController
         private readonly InputActionMap m_CameraController;

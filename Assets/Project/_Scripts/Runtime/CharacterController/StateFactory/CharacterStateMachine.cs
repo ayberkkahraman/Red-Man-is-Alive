@@ -130,9 +130,9 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         
             CurrentState.InitializeState();
 
-            InputController.ControllerInput.CharacterController.Move.started += MovementConfiguration;
-            InputController.ControllerInput.CharacterController.Move.canceled += MovementConfiguration;
-            InputController.ControllerInput.CharacterController.Move.performed += MovementConfiguration;
+            InputController.ControllerInput.CharacterControls.Move.started += MovementConfiguration;
+            InputController.ControllerInput.CharacterControls.Move.canceled += MovementConfiguration;
+            InputController.ControllerInput.CharacterControls.Move.performed += MovementConfiguration;
 
             WalkConditions = new HashSet<MovementCondition>();
             RotateConditions = new HashSet<MovementCondition>();
@@ -352,6 +352,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
 
             var targetVelocity = IsMovementButtonPressed ? AppliedVelocity : transform.forward * CurrentMovementSpeed/1.5f;
 
+            targetVelocity.z = 0f;
             CharacterController.Move(targetVelocity * (speedMultiplier * Time.deltaTime));
             
             //------------------------------------------------------------------------------\\

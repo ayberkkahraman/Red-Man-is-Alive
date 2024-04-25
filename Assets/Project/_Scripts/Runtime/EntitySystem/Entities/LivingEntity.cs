@@ -40,10 +40,9 @@ namespace Project._Scripts.Runtime.EntitySystem.Entities
             
             ManagerContainer.Instance.GetInstance<CameraManager>().UpdateFollowTarget(null);
             ManagerContainer.Instance.GetInstance<CameraManager>().ShakeCamera(25, .3f, .075f);
-            // ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio(DeathAudio);
+            //ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio(DeathAudio);
             
             Animator.speed = 1f;
-            Animator.SetTrigger(Death);
         }
     }
 }

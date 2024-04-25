@@ -12,7 +12,7 @@
     }
     public static void InitializeControllerInput()
     {
-      ControllerInput.CharacterController.Enable();
+      ControllerInput.CharacterControls.Enable();
       ControllerInput.CameraController.Enable();
       ControllerInput.InteractionController.Enable();
       ControllerInput.CombatController.Enable();
@@ -22,7 +22,7 @@
 
     public static void DeInitializeControllerInput()
     {
-      ControllerInput.CharacterController.Disable();
+      ControllerInput.CharacterControls.Disable();
       ControllerInput.CameraController.Disable();
       ControllerInput.InteractionController.Disable();
       ControllerInput.CombatController.Disable();
@@ -30,10 +30,10 @@
     #endregion
     
     
-    public static InputSequence Jump() => Input.Sequence(ControllerInput.CharacterController.Jump);
-    public static InputSequence Dash() => Input.Sequence(ControllerInput.CharacterController.Dash);
-    public static InputSequence Move() => Input.Sequence(ControllerInput.CharacterController.Move);
-    public static InputSequence Run() => Input.Sequence(ControllerInput.CharacterController.Run);
+    public static InputSequence Jump() => Input.Sequence(ControllerInput.CharacterControls.Jump);
+    public static InputSequence Dash() => Input.Sequence(ControllerInput.CharacterControls.Dash);
+    public static InputSequence Move() => Input.Sequence(ControllerInput.CharacterControls.Move);
+    public static InputSequence Run() => Input.Sequence(ControllerInput.CharacterControls.Run);
 
   }
 }
