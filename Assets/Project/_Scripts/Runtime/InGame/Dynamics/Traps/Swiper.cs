@@ -14,9 +14,7 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
       TargetAnimator.applyRootMotion = false;
       ForceImpact(transform.right * RotateSpeed);
 
-      //Preventing the "Null Reference Exception" if the component is null
-      triggeredCollider.TryGetComponent(out LivingEntity entity);
-        entity.OnDieHandler?.Invoke();
+      KillThePlayer(triggeredCollider);
     }
 
     private void Start()

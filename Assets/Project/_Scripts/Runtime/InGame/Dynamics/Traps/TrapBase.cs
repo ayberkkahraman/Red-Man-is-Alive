@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Project._Scripts.Runtime.EntitySystem.Entities;
 using Project._Scripts.Runtime.Library.SubSystems;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
     protected Rigidbody TargetRigidbody { get; set; }
     protected Animator TargetAnimator { get; set; }
 
-    protected abstract void OnTrigger(Collider collider);
+    protected abstract void OnTrigger(Collider triggeredCollider);
 
     protected virtual void OnEnable() => Init();
     protected virtual void OnDisable() => DeInit();
@@ -32,9 +33,16 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
       
       OnTriggeredHandler?.Invoke(other);
 
-      // GetComponents<Collider>().ToList().ForEach(x => x.enabled = false);
-
       enabled = false;
+    }
+
+    protected virtual void KillThePlayer(Collider triggeredCollider)
+    {
+      triggeredCollider.TryGetComponent(out LivingEntity entity);
+      if (entity == null)
+        triggeredCollider.GetComponentInParent<LivingEntity>().OnDieHandler();
+      else  
+        entity.OnDieHandler?.Invoke();
     }
   }
 }
