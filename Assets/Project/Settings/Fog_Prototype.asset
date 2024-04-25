@@ -48,7 +48,7 @@ MonoBehaviour:
   terrainFogHeight: 25
   terrainFogMinAltitude: 0
   terrainFogMaxAltitude: 150
-  albedo: {r: 0.2516465, g: 0.7626825, b: 0.8207547, a: 1}
+  albedo: {r: 0.25098035, g: 0.6406881, b: 0.81960785, a: 1}
   enableDepthGradient: 0
   depthGradient:
     serializedVersion: 2

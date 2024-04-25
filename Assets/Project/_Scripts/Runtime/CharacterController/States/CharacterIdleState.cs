@@ -12,6 +12,10 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     protected override void AccelerationConfiguration(float multiplier = 1f, bool rotationSmooth = true)
     {
       Context.AccelerationConfiguration();
+      
+      var currentPosition = Context.transform.position;
+      currentPosition.z = 0f;
+      Context.transform.position = currentPosition;
     }
     protected override void RotationConfiguration(float multiplier = 1f)
     {

@@ -346,15 +346,12 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             AppliedVelocity = rotation * AppliedVelocity;
 
             //-----------------------------MOVING CHARACTER--------------------------------\\
-
             if (CanPlayerMove == null || CanPlayerMove() != true)
                 return;
 
             var targetVelocity = IsMovementButtonPressed ? AppliedVelocity : transform.forward * CurrentMovementSpeed/1.5f;
-
-            targetVelocity.z = 0f;
+ 
             CharacterController.Move(targetVelocity * (speedMultiplier * Time.deltaTime));
-            
             //------------------------------------------------------------------------------\\
         }
         
