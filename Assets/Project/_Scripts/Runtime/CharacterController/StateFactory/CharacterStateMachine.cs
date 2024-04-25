@@ -52,7 +52,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         [Range(0f, .1f)]
         [SerializeField] private float _minSpeedTreshold = .002f;
 
-        [Range(1.5f, 3f)] public float SlowdownAccelerationMultiplier = 2f;
+        [Range(.1f, 3f)] public float SlowdownAccelerationMultiplier = 2f;
         public float SpeedAccelerationSpeed => _minSpeedTreshold;
 
         public float MinSpeedTreshold => _minSpeedTreshold;
@@ -287,10 +287,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             var targetSpeed = IsMovementButtonPressed && CanPlayerMove?.Invoke() == true ? WalkingSpeed * speedOnRotation * InputDirection.magnitude : 0f;
 
             var accelerationSpeed = IsMovementButtonPressed ? SpeedAccelerationSpeed : SpeedAccelerationSpeed * SlowdownAccelerationMultiplier;
-
-        #if UNITY_EDITOR
-            accelerationSpeed = accelerationSpeed * 3;
-        #endif
+            
             bool isRunning = CurrentState.Factory.WalkState.IsRunning;
 
             accelerationSpeed *= isRunning ? .5f : 1f;
