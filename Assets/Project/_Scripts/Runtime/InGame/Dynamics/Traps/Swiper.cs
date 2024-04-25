@@ -14,7 +14,9 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
       TargetAnimator.applyRootMotion = false;
       ForceImpact(transform.right * RotateSpeed);
 
-      triggeredCollider.GetComponent<LivingEntity>().OnDieHandler();
+      //Preventing the "Null Reference Exception" if the component is null
+      triggeredCollider.TryGetComponent(out LivingEntity entity);
+        entity.OnDieHandler?.Invoke();
     }
 
     private void Start()
@@ -26,9 +28,7 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
     
     public void ForceImpact(Vector3 direction)
     {
-      direction.y = 0f;
-
-      TargetRigidbody.AddForce(direction * Force, ForceMode.Impulse);
+      TargetRigidbody.AddForce(direction * Force * -20f, ForceMode.Impulse);
     }
   }
 }

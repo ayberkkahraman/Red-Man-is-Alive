@@ -100,15 +100,53 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
         /// <returns></returns>
         public IEnumerator ShakeCameraCoroutine(float intensity, float duration, float frequencyGain = 0f)
         {
+            StartCoroutine(SmoothIncreaseAmplitude(.25f, intensity));
+        
             var time = Time.time;
             while (Time.time < time + duration)
             {
-                CinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
                 CinemachineBasicMultiChannelPerlin.m_FrequencyGain = frequencyGain;
                 yield return null;
             }
 
-            CinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
+            StartCoroutine(SmoothReturnToZero(.5f));
+        }
+        
+        public IEnumerator SmoothIncreaseAmplitude(float duration, float targetValue)
+        {
+            float startTime = Time.time;
+            float startValue = CinemachineBasicMultiChannelPerlin.m_AmplitudeGain;
+
+            while (Time.time < startTime + duration)
+            {
+                float elapsedTime = Time.time - startTime;
+                float t = Mathf.Clamp01(elapsedTime / duration);
+                float newValue = Mathf.Lerp(startValue, targetValue, t);
+
+                CinemachineBasicMultiChannelPerlin.m_AmplitudeGain = newValue;
+
+                yield return null;
+            }
+            
+            CinemachineBasicMultiChannelPerlin.m_AmplitudeGain = targetValue;
+        }
+        public IEnumerator SmoothReturnToZero(float duration)
+        {
+            float startTime = Time.time;
+            float startValue = CinemachineBasicMultiChannelPerlin.m_AmplitudeGain;
+
+            while (Time.time < startTime + duration)
+            {
+                float elapsedTime = Time.time - startTime;
+                float t = Mathf.Clamp01(elapsedTime / duration);
+                float newValue = Mathf.Lerp(startValue, 0f, t);
+
+                CinemachineBasicMultiChannelPerlin.m_AmplitudeGain = newValue;
+
+                yield return null;
+            }
+            
+            CinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
         }
         #endregion
     

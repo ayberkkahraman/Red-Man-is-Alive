@@ -32,7 +32,7 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
       
       OnTriggeredHandler?.Invoke(other);
 
-      GetComponents<Collider>().ToList().ForEach(x => x.enabled = false);
+      // GetComponents<Collider>().ToList().ForEach(x => x.enabled = false);
 
       enabled = false;
     }
