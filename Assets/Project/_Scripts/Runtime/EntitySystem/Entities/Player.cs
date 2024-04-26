@@ -7,6 +7,7 @@ namespace Project._Scripts.Runtime.EntitySystem.Entities
     public class Player : LivingEntity
     {
         public GameObject Ragdoll;
+        private static readonly int VelocityAnimationHash = Animator.StringToHash("Velocity");
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -45,6 +46,8 @@ namespace Project._Scripts.Runtime.EntitySystem.Entities
 
         public void ANIM_EVENT_FootstepSound()
         {
+            if(Animator.GetFloat(VelocityAnimationHash) <= 1f) return;
+            
             ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio("Footstep");
         }
     }

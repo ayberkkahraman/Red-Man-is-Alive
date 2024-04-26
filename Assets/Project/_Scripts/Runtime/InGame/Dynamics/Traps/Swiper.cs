@@ -9,6 +9,9 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
   {
     [Range(1f, 10f)][SerializeField] private float RotateSpeed = 1f;
     [Range(1f, 100f)][SerializeField] private float Force = 25f;
+    
+    public enum Axis{LeftToRight, RightToLeft}
+    public Axis RotateAxis;
     protected override void OnTrigger(Collider triggeredCollider)
     {
       TargetAnimator.applyRootMotion = false;
@@ -21,7 +24,12 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
 
     private void Start()
     {
-      transform.DOLocalRotate(Vector3.up * -36, .5f / RotateSpeed)
+      Rotate();
+    }
+
+    private void Rotate()
+    {
+      transform.DORotate(Vector3.up * -36, .5f / RotateSpeed)
         .SetEase(Ease.Linear)
         .SetLoops(-1, LoopType.Incremental);
     }
