@@ -33,6 +33,7 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Zone
     {
       if(other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
       
+      //Desired Zone Event will be executed in this section
       OnTrigger(other);
       
       enabled = false;

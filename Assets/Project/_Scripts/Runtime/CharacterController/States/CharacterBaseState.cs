@@ -48,7 +48,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
             public abstract void InitializeState();
       
             // ReSharper disable Unity.PerformanceAnalysis
-            public void SwitchState(CharacterBaseState newState)
+            protected void SwitchState(CharacterBaseState newState)
             {
                   Context.PreviousState = this;
                   Context.NextState = newState;

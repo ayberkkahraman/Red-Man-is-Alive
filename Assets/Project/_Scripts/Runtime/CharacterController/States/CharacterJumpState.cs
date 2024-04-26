@@ -84,6 +84,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     {
       if(TimeInAir <= .2f) return;
       
+      //Checks if the Player has touched to the Ground
       if(Context.IsGrounded()){SwitchState(Factory.Walk());}
     }
     public override void InitializeSubState()

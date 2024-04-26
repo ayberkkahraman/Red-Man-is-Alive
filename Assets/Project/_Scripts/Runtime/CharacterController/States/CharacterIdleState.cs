@@ -54,12 +54,13 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
         Factory.WalkState.CanMove = true;
       }
 
-      if (InputController.Jump().HasInputTriggered())
-      {
-        if (!Context.ReadyForJump()) return;
+      //Checks if the Player is trying to Jump
+      if (!InputController.Jump().HasInputTriggered())
+        return;
+      
+      if (!Context.ReadyForJump()) return;
         
-        SwitchState(Factory.Jump());
-      }
+      SwitchState(Factory.Jump());
     }
     public override void InitializeSubState()
     {

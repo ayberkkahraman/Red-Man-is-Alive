@@ -7,6 +7,9 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
     {
         private readonly CharacterStateMachine _context;
 
+        /// <summary>
+        /// This Factory will be used as the "Hierarchical State Machine"
+        /// </summary>
         public InitializationState InitializationState;
         public CharacterWalkState WalkState;
         public CharacterIdleState IdleState;

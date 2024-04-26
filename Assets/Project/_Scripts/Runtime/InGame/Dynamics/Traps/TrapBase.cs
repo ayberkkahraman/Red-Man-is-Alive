@@ -19,6 +19,7 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
     
     protected void OnTriggerEnter(Collider other)
     {
+      //Checks if the collider triggers with Player or not
       if(other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
 
       if (TargetRigidbody == null)
@@ -27,6 +28,7 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
         TargetAnimator = other.GetComponent<Animator>() != null ? other.GetComponent<Animator>() : other.GetComponentInParent<Animator>();
       }
       
+      //If the all conditions are match, delegates will be executed after the trigger
       OnTriggeredHandler?.Invoke(other);
 
       enabled = false;

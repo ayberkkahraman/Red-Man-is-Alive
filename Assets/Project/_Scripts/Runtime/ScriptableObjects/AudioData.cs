@@ -5,7 +5,7 @@ namespace Project._Scripts.Runtime.ScriptableObjects.Audio
     [CreateAssetMenu(fileName = "AudioData", menuName = "Game/Audio")]
     public class AudioData : ScriptableObject
     {
-    #region Childs
+    #region Derivatives
         public AudioClip AudioClip;
     #endregion
     

@@ -114,7 +114,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     private void Movement(Vector3 direction, float multiplier)
     {
       if (!CanMove) return;
-
       
       Context.MoveCharacter(direction, multiplier);
     }

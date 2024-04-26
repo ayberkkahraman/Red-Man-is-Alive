@@ -25,6 +25,8 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     }
     public override void EnterState()
     {
+      //Initialize all the state before the game executes
+      
       States = new HashSet<CharacterBaseState>
       {
         Factory.Initialize(),

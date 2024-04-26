@@ -76,7 +76,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
 
         public bool IsRotating { get; set; }
         public bool IsHardRotating { get; set; }
-        public float RotateAngleLimit => 1.75f;
+        public static float RotateAngleLimit => 1.75f;
 
         public Quaternion PreviousRotation { get; set; }
 
@@ -114,11 +114,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         private static readonly int VelocityAnimationHash = Animator.StringToHash("Velocity");
         private static readonly int GroundedAnimationHash = Animator.StringToHash("IsGrounded");
     #endregion
-
-        public Action OnAnimatorMoveCallback;
-        private static readonly int IsRunningAnimationHash = Animator.StringToHash("ISRunning");
-
-
+        
     #region Unity Functions
         private void Awake()
         {
@@ -130,10 +126,12 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         
             CurrentState.InitializeState();
 
+            //Store the Input Executions
             InputController.ControllerInput.CharacterControls.Move.started += MovementConfiguration;
             InputController.ControllerInput.CharacterControls.Move.canceled += MovementConfiguration;
             InputController.ControllerInput.CharacterControls.Move.performed += MovementConfiguration;
-
+            //-----------------------------------------------------------------------------------------
+            
             WalkConditions = new HashSet<MovementCondition>();
             RotateConditions = new HashSet<MovementCondition>();
 
@@ -186,8 +184,10 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
 
             CameraTransform = ManagerContainer.Instance.GetInstance<CameraManager>().MainCamera.transform;
         }
-    
-    
+        
+    #endregion
+
+    #region Condition Configuration
         // ReSharper disable once Unity.PreferNonAllocApi
         public bool CanWalk()
         {
@@ -206,10 +206,9 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         {
             return RotateConditions.All(x => x.Condition?.Invoke() == true);
         }
-    #endregion
-
-    #region Condition Configuration
-        public bool IsFalling() => _coyoteTimer < 0 && !IsGrounded();
+        /// <summary>
+        /// Coyote time is for better experience for the pixel perfect timing executes
+        /// </summary>
         public void UpdateCoyoteTime()
         {
             _coyoteTimer = IsGrounded() ? CoyoteTime : _coyoteTimer -= Time.deltaTime;
@@ -222,6 +221,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         {
             var groundCheckerSize = new Vector3(GroundCheckerDistance / 3f, GroundCheckerDistance, GroundCheckerDistance / 3f);
             var groundCheckerPosition = GroundCheckerPoint.position;
+            // ReSharper disable once Unity.PreferNonAllocApi
             var isGrounded = Physics.OverlapBox(groundCheckerPosition, groundCheckerSize / 2, Quaternion.identity, GroundLayers).Length > 0f;
             Animator.SetBool(GroundedAnimationHash, isGrounded);
             return isGrounded;
@@ -256,7 +256,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
         }
     #endregion
 
-    #region Acceleration
+    #region Locomotion
 
         public void HandleGravity(Vector3 direction, float speedMultiplier = Gravity)
         {
@@ -312,17 +312,13 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             Quaternion currentRotation = transform.rotation;
 
             var lookDirection = new Vector3(AppliedVelocity.x, 0, AppliedVelocity.z);
-            // lookDirection.y = lookDirection == Vector3.zero ?  .0025f : 0f;
 
             if (lookDirection != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-
                 //Update the rotation of the character according to it's direction
                 transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, RotationSpeed * multiplier * Time.deltaTime);
-
             }
-        
             // ReSharper disable once RedundantCheckBeforeAssignment
             if (PreviousRotation != currentRotation)
             {
@@ -332,6 +328,9 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
 
         public void MoveCharacter(Vector3 direction, float speedMultiplier = 1f)
         {
+            
+            //Gets the direction from Camera look position to player forward position
+            
             Vector3 moveDirection = new Vector3(direction.x, 0, direction.y).normalized;
             
             AppliedVelocity = new Vector3(
@@ -344,6 +343,8 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
             var rotation = Quaternion.AngleAxis(-CameraTransform.eulerAngles.x, CameraTransform.right);
 
             AppliedVelocity = rotation * AppliedVelocity;
+            
+            //--------------------------------------------------------------------------------
 
             //-----------------------------MOVING CHARACTER--------------------------------\\
             if (CanPlayerMove == null || CanPlayerMove() != true)

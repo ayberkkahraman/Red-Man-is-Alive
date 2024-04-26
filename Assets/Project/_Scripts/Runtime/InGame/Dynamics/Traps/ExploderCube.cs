@@ -13,15 +13,20 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
     {
       Rigidbody cubeRigidbody = GetComponent<Rigidbody>();
       
+      //Applies the Area Damage
       cubeRigidbody.AddExplosionForce(ExplosionForce * 50f * cubeRigidbody.mass,transform.position, ExplosionRadius);
 
       ManagerContainer.Instance.GetInstance<CameraManager>().ShakeCamera(ExplosionForce*2f, .3f, .08f);
       
+      // ReSharper disable once Unity.PreferNonAllocApi
+      
+      //If the desired force is greater than expected, the Player has to die.
       if (ExplosionForce >= 5f && Physics.OverlapSphere(transform.position, ExplosionRadius).ToList().Exists(x => x == triggeredCollider))
       {
         KillThePlayer(triggeredCollider);
       }
       
+      //Don't forget to play the "Death" audio before the instance destroys
       AudioManager.Instance.PlayAudio("Explode");
       Destroy(this);
     }

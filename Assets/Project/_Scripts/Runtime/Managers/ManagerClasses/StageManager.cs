@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Project._Scripts.Runtime.Managers.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,17 +8,13 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
 {
     public class StageManager : MonoBehaviour
     {
+        /// <summary>
+        /// Loads the scene in desired "Index"
+        /// </summary>
+        /// <param name="index"></param>
         public void LoadSceneAtIndex(int index)
         {
-            RunAfterDuration(() => SceneManager.LoadScene(index), 4f);
-        }
-        
-        public void RunAfterDuration(Action action, float duration) => StartCoroutine(RunAfterSeconds(action, duration));
-
-        static IEnumerator RunAfterSeconds(Action action, float duration)
-        {
-            yield return new WaitForSeconds(duration);
-            action?.Invoke();
+            ManagerContainer.Instance.RunAfterSeconds(3f, () => SceneManager.LoadScene(index));
         }
     }
 }

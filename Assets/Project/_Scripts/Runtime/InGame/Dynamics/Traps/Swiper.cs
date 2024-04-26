@@ -9,9 +9,6 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
   {
     [Range(1f, 10f)][SerializeField] private float RotateSpeed = 1f;
     [Range(1f, 100f)][SerializeField] private float Force = 25f;
-    
-    public enum Axis{LeftToRight, RightToLeft}
-    public Axis RotateAxis;
     protected override void OnTrigger(Collider triggeredCollider)
     {
       TargetAnimator.applyRootMotion = false;
@@ -36,6 +33,8 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
     
     public void ForceImpact(Vector3 direction)
     {
+      //This will apply a force to Player rigidbody - but non-ragdoll
+      //Deprecated to Ragdoll dynamic force
       TargetRigidbody.AddForce(direction * Force * -20f, ForceMode.Impulse);
     }
   }

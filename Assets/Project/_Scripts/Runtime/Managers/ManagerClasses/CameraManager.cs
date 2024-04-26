@@ -81,6 +81,11 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
         {
             CurrentCamera.Follow = targetTransform;
         }
+        
+        public void ClearFollowTarget()
+        {
+            CurrentCamera.Follow = null;
+        }
 
 
         public void ShakeCamera()

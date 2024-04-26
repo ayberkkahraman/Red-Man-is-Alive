@@ -19,11 +19,11 @@ namespace Project._Scripts.Runtime.InGame.Dynamics._3DText
     }
 
     public List<Letter> Letters;
-    private Camera _camera;
 
     public void Start()
     {
-      _camera = Camera.main;
+      //Wavy animation for the "Caution" Text
+      
       for (int i = 0; i < LetterTransforms.Count; i++)
       {
         Transform letter = LetterTransforms[i];
@@ -37,6 +37,13 @@ namespace Project._Scripts.Runtime.InGame.Dynamics._3DText
       }
     }
 
+    /// <summary>
+    /// Spawns a text on desired position
+    /// </summary>
+    /// <param name="parentTransform"></param>
+    /// <param name="textContent"></param>
+    /// <param name="position"></param>
+    /// <param name="letterOffset"></param>
     public void SpawnTextInPosition(Transform parentTransform, string textContent, Vector3 position, float letterOffset = .5f)
     {
       Transform targetTransform = Instantiate(
@@ -61,6 +68,10 @@ namespace Project._Scripts.Runtime.InGame.Dynamics._3DText
       }
     }
 
+    /// <summary>
+    /// Sets the state text when the Game State has been changed
+    /// </summary>
+    /// <param name="textContent"></param>
     public void SpawnGameStateText(string textContent)
     {
       var delay = textContent == "Game Over!" ? 1f : .2f;

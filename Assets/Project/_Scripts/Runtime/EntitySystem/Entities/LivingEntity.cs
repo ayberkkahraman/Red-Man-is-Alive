@@ -32,6 +32,9 @@ namespace Project._Scripts.Runtime.EntitySystem.Entities
             OnDieHandler -= Die;
         }
 
+        /// <summary>
+        /// This method will be execute when the Player Dies whether interactions or entity targets
+        /// </summary>
         protected abstract void Die();
     }
 }

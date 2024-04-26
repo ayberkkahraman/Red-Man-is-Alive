@@ -44,6 +44,9 @@ namespace Project._Scripts.Runtime.EntitySystem.Entities
             Ragdoll.SetActive(true);
         }
 
+        /// <summary>
+        /// Animation Handling
+        /// </summary>
         public void ANIM_EVENT_FootstepSound()
         {
             if(Animator.GetFloat(VelocityAnimationHash) <= 1f) return;

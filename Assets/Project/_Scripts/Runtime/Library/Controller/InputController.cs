@@ -29,10 +29,12 @@
     }
     #endregion
     
+    /// <summary>
+    /// This script will be used as the static-input generic extension class
+    /// </summary>
+    /// <returns></returns>
     
     public static InputSequence Jump() => Input.Sequence(ControllerInput.CharacterControls.Jump);
-    public static InputSequence Dash() => Input.Sequence(ControllerInput.CharacterControls.Dash);
-    public static InputSequence Move() => Input.Sequence(ControllerInput.CharacterControls.Move);
     public static InputSequence Run() => Input.Sequence(ControllerInput.CharacterControls.Run);
 
   }

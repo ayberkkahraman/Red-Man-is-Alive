@@ -13,10 +13,17 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
     public UnityEvent OnGameSuccess;
     public UnityEvent OnGameOver;
 
+    /// <summary>
+    /// Initializing the Game State on the Awake
+    /// </summary>
     private void Awake()
     {
       SetGameState(State.Running);
     }
+    /// <summary>
+    /// Sets the Game State
+    /// </summary>
+    /// <param name="state"></param>
     public void SetGameState(State state)
     {
       _gameState = state;
@@ -38,6 +45,9 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
       }
     }
 
+    //------------------------------------------------------------------------
+    //These sections in below will be used in the UnityEvent on the Inspector
+    //------------------------------------------------------------------------
     public void UNITY_EVENT_GameSuccess()
     {
       SetGameState(State.Success);
@@ -47,5 +57,6 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
     {
       SetGameState(State.GameOver);
     }
+    //------------------------------------------------------------------------
   }
 }

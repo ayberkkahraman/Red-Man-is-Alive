@@ -14,6 +14,8 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
 
     private void Start()
     {
+      //Avoid if the target "var" is null
+      
       Volume.profile.TryGet(out _vignette);
       Volume.profile.TryGet(out _paniniProjection);
       Volume.profile.TryGet(out _chromaticAberration);
