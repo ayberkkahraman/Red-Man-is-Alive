@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f22da820482d62c4c88aa77e2216462c, type: 3}
-  m_Name: BGM
+  m_Name: Explode
   m_EditorClassIdentifier: 
-  AudioClip: {fileID: 8300000, guid: 8bd7ef0d5a6008a4ba2bbdfdc80c02e5, type: 3}
-  Type: 0
-  Volume: 0.2
-  PitchVariation: 0
+  AudioClip: {fileID: 8300000, guid: 9e84a51576009ba48867e0f1ab067a8b, type: 3}
+  Type: 2
+  Volume: 0.7
+  PitchVariation: 0.05
   CertainPitch: 0

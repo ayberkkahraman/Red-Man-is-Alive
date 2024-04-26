@@ -63,7 +63,8 @@ namespace Project._Scripts.Runtime.InGame.Dynamics._3DText
 
     public void SpawnGameStateText(string textContent)
     {
-      ManagerContainer.Instance.RunAfterSeconds(1f, () =>
+      var delay = textContent == "Game Over!" ? 1f : .5f;
+      ManagerContainer.Instance.RunAfterSeconds(delay, () =>
       {
             SpawnTextInPosition(transform,textContent, GameStateTextPosition.position);
       });

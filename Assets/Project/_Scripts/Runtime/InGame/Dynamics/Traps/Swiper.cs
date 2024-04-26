@@ -15,6 +15,8 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
       ForceImpact(transform.right * RotateSpeed);
 
       KillThePlayer(triggeredCollider);
+      
+      ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio("Force");
     }
 
     private void Start()
@@ -27,8 +29,6 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
     public void ForceImpact(Vector3 direction)
     {
       TargetRigidbody.AddForce(direction * Force * -20f, ForceMode.Impulse);
-      
-      ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio("Force");
     }
   }
 }

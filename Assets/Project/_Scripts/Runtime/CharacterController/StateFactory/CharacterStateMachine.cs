@@ -5,7 +5,6 @@ using _Scripts.Runtime.Entity.CharacterController.States.BaseStates;
 using Project._Scripts.Runtime.Library.Controller;
 using Project._Scripts.Runtime.Managers.Manager;
 using Project._Scripts.Runtime.Managers.ManagerClasses;
-using RootMotion.FinalIK;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
