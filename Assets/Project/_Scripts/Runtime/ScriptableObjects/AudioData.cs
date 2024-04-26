@@ -21,9 +21,7 @@ namespace Project._Scripts.Runtime.ScriptableObjects.Audio
         {
             BGM,
             MainSfx,
-            SecondaryEffect,
             SecondarySfx,
-            Effect
         }
     #endregion
     }

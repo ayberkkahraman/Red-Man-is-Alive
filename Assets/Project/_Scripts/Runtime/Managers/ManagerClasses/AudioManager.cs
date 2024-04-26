@@ -21,13 +21,9 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
         [Space]
         [Header("PoolObjects")]
         [SerializeField] private GameObject MainSfxPoolObject;
-        [SerializeField] private GameObject EffectPoolObject;
-        [SerializeField] private GameObject SecondaryEffectSfxPoolObject;
         [SerializeField] private GameObject SecondarySfxPoolObject;
         
         private List<AudioSource> _mainSfxPool = new();
-        private List<AudioSource> _effectPool = new();
-        private List<AudioSource> _secondaryEffectPool = new();
         private List<AudioSource> _secondarySfxPool = new();
 
         private List<AudioData> _audioDatas;
@@ -57,8 +53,7 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
         public void ChangeBGMAudio(string audioName)
         {
             StopAllCoroutines();
-            Debug.Log(audioName);
-            StartCoroutine(ChangeBGMCoroutine(audioName));
+            StartCoroutine(ChangeBGMCoroutine(audioName, GetAudioByName(audioName).Volume));
         }
 
         public void StopBGM(float duration = 3f)
@@ -113,8 +108,6 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
         {
             //------------------------------INITIALIZING THE AUDIO CHANNELS----------------------------------
             _mainSfxPool = MainSfxPoolObject.GetComponentsInChildren<AudioSource>().ToList();
-            _effectPool = SecondaryEffectSfxPoolObject.GetComponentsInChildren<AudioSource>().ToList();
-            _secondaryEffectPool = EffectPoolObject.GetComponentsInChildren<AudioSource>().ToList();
             _secondarySfxPool = SecondarySfxPoolObject.GetComponentsInChildren<AudioSource>().ToList();
 
         }
@@ -141,7 +134,7 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
         /// <param name="pitchVariation"></param>
         /// <param name="type"></param>
         public void PlayAudio(AudioClip clip, float volume = 1f, float pitchVariation = 0f,
-            AudioData.AudioType type = AudioData.AudioType.Effect)
+            AudioData.AudioType type = AudioData.AudioType.MainSfx)
         {
             //Null Check
             if (clip == null) return;
@@ -260,24 +253,6 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
                         return _mainSfxPool.Find(x => x.isPlaying == false);
                     }
                     source = _mainSfxPool.OrderBy(x => x.time).Last();
-
-                    source.Stop();
-                    return source;
-                case AudioData.AudioType.Effect:
-                    if (_effectPool.Exists(x => x.isPlaying == false))
-                    {
-                        return _effectPool.Find(x => x.isPlaying == false);
-                    }
-                    source = _effectPool.OrderBy(x => x.time).Last();
-
-                    source.Stop();
-                    return source;
-                case AudioData.AudioType.SecondaryEffect:
-                    if (_secondaryEffectPool.Exists(x => x.isPlaying == false))
-                    {
-                        return _secondaryEffectPool.Find(x => x.isPlaying == false);
-                    }
-                    source = _secondaryEffectPool.OrderBy(x => x.time).Last();
 
                     source.Stop();
                     return source;
