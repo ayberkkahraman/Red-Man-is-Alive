@@ -1,5 +1,5 @@
 using _Scripts.Runtime.Entity.CharacterController.StateFactory;
-using Project._Scripts.Runtime.Library.SubSystems;
+using Project._Scripts.Runtime.Managers.Manager;
 using UnityEngine;
 
 namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
@@ -75,7 +75,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       IsInAir = false;
       
       Context.Animator.SetBool(IsInAirAnimationHash, false);
-      BaseBehaviour.RunAfterSeconds(.02f, () => Context.Animator.SetBool(IsInAirAnimationHash, false));
+      ManagerContainer.Instance.RunAfterSeconds(.02f, () => Context.Animator.SetBool(IsInAirAnimationHash, false));
     }
     public override void CheckSwitchStates()
     {
@@ -101,8 +101,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
         return;
       
       IsInAir = false;
-      Factory.FallState.TimeInAir = TimeInAir*.625f;
-      SwitchState(Factory.Fall(Vector3.up,_verticalVelocity));
     }
 
     public void  JumpHandler()

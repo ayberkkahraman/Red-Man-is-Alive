@@ -61,9 +61,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       {
         SwitchState(Factory.Idle());
       }
-
-      if (Context.IsFalling()) SwitchState(Factory.Fall(Vector3.up));
-
     }
     public override void InitializeSubState()
     {

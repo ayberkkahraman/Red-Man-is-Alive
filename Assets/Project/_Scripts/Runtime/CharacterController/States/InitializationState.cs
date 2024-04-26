@@ -31,8 +31,6 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
         Factory.Jump(),
         Factory.Idle(),
         Factory.Walk(),
-        Factory.Fall(Vector3.up),
-        Factory.Dead(),
       };
 
       States.ToList().ForEach(x => x.InitializeState());

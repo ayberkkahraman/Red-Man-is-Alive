@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,6 +51,18 @@ namespace Project._Scripts.Runtime.Managers.Manager
     public void RemoveInstance<T>(T instance) where T : MonoBehaviour
     {
       Managers.Remove(instance);
+    }
+
+    public IEnumerator RunAfterSecondsCoroutine(float delay, Action action)
+    {
+      yield return new WaitForSeconds(delay);
+      
+      action?.Invoke();
+    }
+
+    public void RunAfterSeconds(float delay, Action action)
+    {
+      StartCoroutine(RunAfterSecondsCoroutine(delay, action));
     }
     
   }

@@ -1,20 +1,16 @@
-﻿using System;
-using System.Linq;
-using Project._Scripts.Runtime.EntitySystem.Entities;
-using Project._Scripts.Runtime.Library.SubSystems;
+﻿using Project._Scripts.Runtime.EntitySystem.Entities;
+using Project._Scripts.Runtime.Interfaces;
 using UnityEngine;
 
 namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
 {
-  public abstract class TrapBase : MonoBehaviour
+  public abstract class TrapBase : MonoBehaviour, IInteractable
   {
-    public delegate void OnTriggered(Collider collider);
-    public OnTriggered OnTriggeredHandler;
-    
     protected Rigidbody TargetRigidbody { get; set; }
     protected Animator TargetAnimator { get; set; }
 
     protected abstract void OnTrigger(Collider triggeredCollider);
+    public IInteractable.OnTriggered OnTriggeredHandler { get; set; }
 
     protected virtual void OnEnable() => Init();
     protected virtual void OnDisable() => DeInit();
@@ -43,6 +39,10 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
         triggeredCollider.GetComponentInParent<LivingEntity>().OnDieHandler();
       else  
         entity.OnDieHandler?.Invoke();
+    }
+    void IInteractable.OnTrigger(Collider triggeredCollider)
+    {
+      OnTrigger(triggeredCollider);
     }
   }
 }

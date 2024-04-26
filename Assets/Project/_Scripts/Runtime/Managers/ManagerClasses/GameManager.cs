@@ -1,46 +1,51 @@
-﻿using DG.Tweening;
+﻿using Project._Scripts.Runtime.Managers.Manager;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Project._Scripts.Runtime.Managers.ManagerClasses
 {
   public class GameManager : MonoBehaviour
   {
-    public Volume Volume;
-    private Vignette _vignette;
-    private PaniniProjection _paniniProjection;
-    private ChromaticAberration _chromaticAberration;
+    public enum State{Running, GameOver, Success}
+    private State _gameState;
 
-    private void Start()
+    public UnityEvent OnGameSuccess;
+    public UnityEvent OnGameOver;
+
+    private void Awake()
     {
-      Volume.profile.TryGet(out _vignette);
-      Volume.profile.TryGet(out _paniniProjection);
-      Volume.profile.TryGet(out _chromaticAberration);
+      SetGameState(State.Running);
+    }
+    public void SetGameState(State state)
+    {
+      _gameState = state;
+
+      switch ( _gameState )
+      {
+        case State.Success:
+          OnGameSuccess?.Invoke();
+          break;
+        case State.GameOver:
+          OnGameOver?.Invoke();
+          break;
+      }
+
+      //Restart stage after game ends
+      if (state != State.Running)
+      {
+        ManagerContainer.Instance.GetInstance<StageManager>().LoadSceneAtIndex(SceneManager.GetActiveScene().buildIndex);
+      }
     }
 
-    public void ActivateVignette(float targetIntensity)
+    public void UNITY_EVENT_GameSuccess()
     {
-      DOVirtual.Float(0, targetIntensity, .5f, intensityValue =>
-      {
-        _vignette.intensity.value = intensityValue;
-      }).SetLoops(2, LoopType.Yoyo);
+      SetGameState(State.Success);
     }
-
-    public void ActivateChromaticAberration(float duration)
+    
+    public void UNITY_EVENT_GameOver()
     {
-      DOVirtual.Float(0, 1f, duration, intensityValue =>
-      {
-        _chromaticAberration.intensity.value = intensityValue;
-      });
-    }
-
-    public void ActivatePaniniProjection(float targetIntensity)
-    {
-      DOVirtual.Float(0, targetIntensity, .5f, intensityValue =>
-      {
-        _paniniProjection.distance.value = intensityValue;
-      }).SetLoops(2, LoopType.Yoyo);
+      SetGameState(State.GameOver);
     }
   }
 }

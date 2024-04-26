@@ -7,10 +7,6 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
 {
     public class StageManager : MonoBehaviour
     {
-        public void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.R)) LoadSceneAtIndex(SceneManager.GetActiveScene().buildIndex);
-        }
         public void LoadSceneAtIndex(int index)
         {
             RunAfterDuration(() => SceneManager.LoadScene(index), 4f);

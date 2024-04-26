@@ -1,6 +1,4 @@
-﻿using System;
-using DG.Tweening;
-using Project._Scripts.Runtime.EntitySystem.Entities;
+﻿using DG.Tweening;
 using UnityEngine;
 
 namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
