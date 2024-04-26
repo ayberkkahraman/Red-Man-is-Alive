@@ -19,7 +19,7 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
 
       KillThePlayer(triggeredCollider);
       
-      ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio("Force");
+      AudioManager.Instance.PlayAudio("Force");
     }
 
     private void Start()

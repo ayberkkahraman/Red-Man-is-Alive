@@ -9,6 +9,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
 {
   public sealed class CharacterWalkState : CharacterBaseState
   {
+    private static readonly int IsRunningAnimationHash = Animator.StringToHash("IsRunning");
     public CinemachineVirtualCamera CharacterCamera { get; set; }
     
     public CharacterWalkState(CharacterStateMachine currentContext, CharacterStateFactory characterStateFactory) : base(currentContext, characterStateFactory)
@@ -70,6 +71,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
     public void CheckIsRunning()
     {
       IsRunning = CanRun && InputController.Run().HasInputPerformed();
+      Context.Animator.SetBool(IsRunningAnimationHash, IsRunning);
     }
 
     private void CheckSwitchSubStates()

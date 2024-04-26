@@ -37,8 +37,17 @@ namespace Project._Scripts.Runtime.Managers.ManagerClasses
         #region OnAwake
         public bool PlayOnAwake;
 
+        public static AudioManager Instance { get; set; }
+
         protected void Awake()
         {
+            //---------------------BASIC SINGLETON---------------------
+            if (Instance == null) Instance = this;
+            else Destroy(gameObject);
+
+            DontDestroyOnLoad(gameObject);
+            //----------------------------------------------------------
+            
             Initialize();
             InitializeAudioResources();
         }

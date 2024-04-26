@@ -52,7 +52,7 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       IsInAir = true;
       Context.Animator.SetBool(IsInAirAnimationHash, IsInAir);
       
-      ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio("Jump");
+      AudioManager.Instance.PlayAudio("Jump");
     }
     public override void FixedUpdateState()
     {

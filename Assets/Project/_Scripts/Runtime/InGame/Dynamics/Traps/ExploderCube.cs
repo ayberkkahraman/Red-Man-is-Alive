@@ -22,7 +22,7 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
         KillThePlayer(triggeredCollider);
       }
       
-      ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio("Explode");
+      AudioManager.Instance.PlayAudio("Explode");
       Destroy(this);
     }
   }

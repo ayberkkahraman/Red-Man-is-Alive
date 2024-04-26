@@ -33,7 +33,7 @@ namespace Project._Scripts.Runtime.EntitySystem.Entities
             {
                 ManagerContainer.Instance.GetInstance<GameManager>().SetGameState(GameManager.State.GameOver);
             });
-            ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio(DeathAudio);
+            AudioManager.Instance.PlayAudio(DeathAudio);
         }
 
         public void ActivateRagdoll()
@@ -48,7 +48,7 @@ namespace Project._Scripts.Runtime.EntitySystem.Entities
         {
             if(Animator.GetFloat(VelocityAnimationHash) <= 1f) return;
             
-            ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio("Footstep");
+            AudioManager.Instance.PlayAudio("Footstep");
         }
     }
 }

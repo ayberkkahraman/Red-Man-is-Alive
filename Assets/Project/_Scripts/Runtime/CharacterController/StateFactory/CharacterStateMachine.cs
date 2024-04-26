@@ -116,7 +116,8 @@ namespace _Scripts.Runtime.Entity.CharacterController.StateFactory
     #endregion
 
         public Action OnAnimatorMoveCallback;
-       
+        private static readonly int IsRunningAnimationHash = Animator.StringToHash("ISRunning");
+
 
     #region Unity Functions
         private void Awake()

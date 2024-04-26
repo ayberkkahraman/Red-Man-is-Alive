@@ -40,6 +40,8 @@ namespace Project._Scripts.Runtime.Managers.Manager
   
     public void AddInstance<T>(T instance) where T : MonoBehaviour
     {
+      if(Managers.Contains(this)) return;
+
       Managers.Add(instance);
     }
 
