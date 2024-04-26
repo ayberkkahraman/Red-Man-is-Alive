@@ -1,5 +1,6 @@
 using _Scripts.Runtime.Entity.CharacterController.StateFactory;
 using Project._Scripts.Runtime.Managers.Manager;
+using Project._Scripts.Runtime.Managers.ManagerClasses;
 using UnityEngine;
 
 namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
@@ -50,6 +51,8 @@ namespace _Scripts.Runtime.Entity.CharacterController.States.BaseStates
       _verticalVelocity = Mathf.Sqrt(2f * JumpForce * -Gravity);
       IsInAir = true;
       Context.Animator.SetBool(IsInAirAnimationHash, IsInAir);
+      
+      ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio("Jump");
     }
     public override void FixedUpdateState()
     {

@@ -1,4 +1,6 @@
 ﻿using DG.Tweening;
+using Project._Scripts.Runtime.Managers.Manager;
+using Project._Scripts.Runtime.Managers.ManagerClasses;
 using UnityEngine;
 
 namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
@@ -25,6 +27,8 @@ namespace Project._Scripts.Runtime.InGame.Dynamics.Traps
     public void ForceImpact(Vector3 direction)
     {
       TargetRigidbody.AddForce(direction * Force * -20f, ForceMode.Impulse);
+      
+      ManagerContainer.Instance.GetInstance<AudioManager>().PlayAudio("Force");
     }
   }
 }
